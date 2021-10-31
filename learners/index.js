@@ -2,12 +2,10 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-//I'm not sure if I should be putting the values here
 const vehicles = [
     { "type":"Taxi", "carPlateNo":"SHA1111Z" }
 ];
 
-//I'm not sure if I should be putting the values here
 const garages = [
     { "garageNo":1, "address":"Address 1" }
 ];
@@ -15,7 +13,7 @@ const garages = [
 app.post("/vehicle", function (req, res) {
     if (vehicles.length > 0 && vehicles.some((v) => v.carPlateNo === req.body.carPlateNo)) {
       res.status(409);
-      return res.send("Vehicle already exists");
+      return res.send(`Vehicle ${req.body.carPlateNo} exists in the database.`);
     }
     vehicles.push(req.body);
     res.json(req.body);
@@ -34,7 +32,7 @@ app.put("/vehicle/:carPlateNo", function (req, res) {
       }
     }
     res.status(404);
-    res.send("Car plate number not found");
+    res.send("Car plate number not found.");
 });
 
 app.post("/garage", function (req, res) {
